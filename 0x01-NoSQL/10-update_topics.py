@@ -8,7 +8,7 @@ from typing import Any, Dict, List
 from pymongo import MongoClient
 
 
-def update_topics(mongo_collection: MongoClient[Dict[str, Any]],
+def update_topics(mongo_collection,
                   name: str,
                   topics: List[str]):
     """
