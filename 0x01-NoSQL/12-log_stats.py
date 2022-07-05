@@ -11,15 +11,9 @@ if __name__ == "__main__":
     logs_collection = client.logs.nginx
     print(f'{logs_collection.count_documents(filter={})} logs')
     print('Methods:')
-    print(f'\tmethod GET: {logs_collection.count_documents\
-( filter={"method": "GET"} )}')
-    print(f'\tmethod POST: {logs_collection.count_documents\
-( filter={"method": "POST"} )}')
-    print(f'\tmethod PUT: {logs_collection.count_documents\
-( filter={"method": "PUT"} )}')
-    print(f'\tmethod PATCH: {logs_collection.count_documents\
-( filter={"method": "PATCH"} )}')
-    print(f'\tmethod DELETE: {logs_collection.count_documents\
-( filter={"method": "DELETE"} )}')
-    print(f'{logs_collection.count_documents\
-( filter={"method": "GET", "path": "/status"} )} status check')
+    print(f'\tmethod GET: {logs_collection.count_documents( filter={"method": "GET"} )}')
+    print(f'\tmethod POST: {logs_collection.count_documents( filter={"method": "POST"} )}')
+    print(f'\tmethod PUT: {logs_collection.count_documents( filter={"method": "PUT"} )}')
+    print(f'\tmethod PATCH: {logs_collection.count_documents( filter={"method": "PATCH"} )}')
+    print(f'\tmethod DELETE: {logs_collection.count_documents( filter={"method": "DELETE"} )}')
+    print(f'{logs_collection.count_documents( filter={"method": "GET", "path": "/status"} )} status check')
