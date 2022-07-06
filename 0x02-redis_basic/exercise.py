@@ -50,8 +50,8 @@ class Cache():
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    @count_calls
     @call_history
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """method to return a string from any argument"""
         random_key = str(uuid.uuid4())
