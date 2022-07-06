@@ -4,7 +4,7 @@ text file to write strings into Redis,
 create clss and instantiate, add methods
 """
 
-from typing import Any, Union, Callable
+from typing import Any, Union, Callable, Optional
 import uuid
 import redis
 
@@ -26,17 +26,18 @@ class Cache():
         self._redis.set(random_key, data)
         return random_key
 
-    def get(self, key, fn=None):
+    def get(self, key,
+            fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
         """method to convert back to the desired format"""
         corres_value = self._redis.get(key)
         if fn:
-            data = fn(corres_value)
-        return data
+            value = fn(corres_value)
+        return vaue
 
-    def get_str(self, key):
+    def get_str(self, key: str) -> str:
         """parametrize the string format of a value"""
         return self.get(key, str)
 
-    def get_int(self, key):
+    def get_int(self, key: int) -> int:
         """parametrize the integer format of a value"""
         return self.get(key, int)
