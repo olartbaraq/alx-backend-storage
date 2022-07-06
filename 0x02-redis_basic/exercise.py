@@ -31,7 +31,7 @@ class Cache():
         corres_value = self._redis.get(key)
         if fn:
             data = fn(corres_value)
-            return data
+        return data
 
     def get_str(self, key):
         """parametrize the string format of a value"""
