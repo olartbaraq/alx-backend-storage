@@ -26,7 +26,7 @@ class Cache():
         self._redis.set(random_key, data)
         return random_key
 
-    def get(self, key: str, Callable[fn]):
+    def get(self, key: str, fn=None):
         """method to convert back to the desired format"""
         corres_value = self._redis.get(key)
         if fn:
