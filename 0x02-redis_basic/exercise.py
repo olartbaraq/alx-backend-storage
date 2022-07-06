@@ -27,15 +27,13 @@ def call_history(method: Callable) -> Callable:
     """Decorator for storing the history of inputs
     and outputs for a particular function"""
     @wraps(method)
-    def wrap_history(*args):
+    def wrap_history(self, *args, **kwargs):
         """Wrapper for decorator functionality """
-        inputlist = method.__qualname__ + ":inputs"
-        outputlist = method.__qualname__ + ":outputs"
-        cache = (args[0])._redis
-        cache.rpush(inputlist, args[1])
-        output = method(*args)
-        cache.rpush(outputlist, output)
-        return output
+        inputlist = str(args)
+        self._redis.rpush(method.__qualname__ + ":inputs", inputlist)
+        outputlist = str(method(self, *args, **kwargs))
+        self._redis.rpush(method.__qualname__ + ":outputs", outputlist)
+        return outputlist
     return wrap_history
 
 
