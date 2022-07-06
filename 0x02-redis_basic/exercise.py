@@ -4,9 +4,23 @@ text file to write strings into Redis,
 create clss and instantiate, add methods
 """
 
+from functools import wraps
 from typing import Any, Union, Callable, Optional
-import uuid
 import redis
+import uuid
+
+
+def count_calls(method: Callable) -> Callable:
+    """Decortator for counting how many times a function
+    has been called """
+    key = method.__qualname__
+
+    @wraps(method)
+    def raise_count(self, *args, **kwargs):
+        """increase the count of when key is called"""
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+    return raise_count
 
 
 class Cache():
@@ -20,6 +34,7 @@ class Cache():
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """method to return a string from any argument"""
         random_key = str(uuid.uuid4())
@@ -31,8 +46,8 @@ class Cache():
         """method to convert back to the desired format"""
         corres_value = self._redis.get(key)
         if fn:
-            value = fn(corres_value)
-        return vaue
+            corres_value = fn(corres_value)
+        return corres_value
 
     def get_str(self, key: str) -> str:
         """parametrize the string format of a value"""
